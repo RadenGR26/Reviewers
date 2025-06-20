@@ -1,0 +1,215 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Analisis Perilaku Pelanggan</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #f0f2f5; /* Warna latar belakang lebih lembut */
+        }
+        .container {
+            max-width: 1200px;
+            margin-top: 40px;
+            margin-bottom: 40px;
+            padding: 30px; /* Padding lebih besar */
+            background-color: #ffffff;
+            border-radius: 20px; /* Sudut lebih membulat */
+            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.15); /* Bayangan lebih kuat */
+        }
+        h1, h3 {
+            color: #2c3e50; /* Warna judul lebih gelap */
+            margin-bottom: 30px;
+            text-align: center;
+            font-weight: 700; /* Tebal */
+        }
+        .img-box {
+            background-color: #f7f9fc; /* Latar belakang kotak gambar lebih terang */
+            padding: 20px; /* Padding lebih besar */
+            border-radius: 15px; /* Sudut lebih membulat */
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08); /* Bayangan lebih halus */
+            text-align: center;
+            margin-bottom: 25px;
+            border: 1px solid #e0e0e0; /* Border tipis */
+        }
+        .img-box img {
+            max-width: 100%;
+            height: auto;
+            border-radius: 10px; /* Sudut gambar lebih membulat */
+            margin-top: 15px;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+        }
+        .img-box h6 {
+            color: #34495e;
+            font-weight: 600; /* Lebih tebal */
+            margin-bottom: 15px;
+            font-size: 1.2em; /* Ukuran font sedikit lebih besar */
+        }
+        .list-group-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 15px 25px; /* Padding lebih besar */
+            border-radius: 10px; /* Sudut lebih membulat */
+            margin-bottom: 10px;
+            background-color: #eaf1f8; /* Warna latar belakang item daftar */
+            border-color: #d1e0ed;
+            font-size: 1.1em;
+            transition: all 0.3s ease; /* Transisi halus saat hover */
+        }
+        .list-group-item:hover {
+            background-color: #dbeaf7; /* Warna latar belakang saat hover */
+            transform: translateY(-2px); /* Efek angkat sedikit */
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
+        }
+        .list-group-item span:first-child {
+            font-weight: 600;
+            color: #34495e;
+        }
+        .badge {
+            font-size: 0.95em;
+            padding: 0.6em 0.9em;
+            border-radius: 0.5rem; /* Sudut badge lebih membulat */
+        }
+        .badge.bg-primary {
+            background-color: #007bff !important;
+            color: white;
+        }
+        .table {
+            margin-top: 25px;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08);
+        }
+        .table thead {
+            background-color: #007bff;
+            color: white;
+            font-weight: 600;
+        }
+        .table th, .table td {
+            padding: 14px 18px; /* Padding sel lebih besar */
+            vertical-align: middle;
+            border-top: 1px solid #e9ecef;
+        }
+        .table tbody tr:nth-of-type(even) {
+            background-color: #f9fbfd; /* Warna baris genap */
+        }
+        .table tbody tr:hover {
+            background-color: #e2f0fe; /* Warna baris saat hover */
+        }
+        .warning-message {
+            color: #dc3545;
+            font-weight: bold;
+            text-align: center;
+            margin-top: 20px;
+            padding: 20px;
+            border: 1px solid #dc3545;
+            border-radius: 10px;
+            background-color: #fff0f0; /* Latar belakang pesan peringatan */
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+        }
+    </style>
+</head>
+<body class="bg-light">
+<div class="container my-4 rounded-3 shadow">
+    <h1 class="mb-4 text-center">Hasil Analisis Perilaku Pelanggan</h1>
+
+    <h3 class="mt-4">Visualisasi Data</h3>
+    <div class="row">
+        {% if visualizations %}
+            <div class="col-md-6 img-box mb-3">
+                <h6>Distribusi Rating</h6>
+                {% if visualizations.rating_dist %}
+                    <img src="data:image/png;base64,{{ visualizations.rating_dist }}" alt="Distribusi Rating">
+                {% else %}
+                    <p class="warning-message">Visualisasi Distribusi Rating tidak tersedia.</p>
+                {% endif %}
+            </div>
+            <div class="col-md-6 img-box mb-3">
+                <h6>Produk Populer</h6>
+                {% if visualizations.top_products %}
+                    <img src="data:image/png;base64,{{ visualizations.top_products }}" alt="Produk Populer">
+                {% else %}
+                    <p class="warning-message">Visualisasi Produk Populer tidak tersedia.</p>
+                {% endif %}
+            </div>
+            <div class="col-md-12 img-box mb-3">
+                <h6>Reviewer Teraktif</h6>
+                {% if visualizations.top_reviewers %}
+                    <img src="data:image/png;base64,{{ visualizations.top_reviewers }}" alt="Reviewer Teraktif">
+                {% else %}
+                    <p class="warning-message">Visualisasi Reviewer Teraktif tidak tersedia.</p>
+                {% endif %}
+            </div>
+        {% else %}
+            <div class="col-12">
+                <p class="warning-message">Tidak ada visualisasi data yang dihasilkan. Pastikan data input Anda valid.</p>
+            </div>
+        {% endif %}
+    </div>
+
+    <!-- Bagian Word Cloud Baru -->
+    <h3 class="mt-4">Word Cloud Ulasan Produk</h3>
+    <div class="row">
+        <div class="col-12 img-box mb-3">
+            <h6>Kata Kunci Paling Sering Muncul</h6>
+            {% if wordcloud_image %}
+                <img src="data:image/png;base64,{{ wordcloud_image }}" alt="Word Cloud Ulasan Produk">
+            {% else %}
+                <p class="warning-message">Word Cloud tidak tersedia. Pastikan kolom 'Text' ada di dataset dan berisi ulasan yang valid.</p>
+            {% endif %}
+        </div>
+    </div>
+
+    <h3 class="mt-4">Ringkasan Clustering Pelanggan</h3>
+    {% if cluster_viz %}
+        <div class="row">
+            <div class="col-12 img-box mb-3">
+                <h6>Visualisasi Cluster Pengguna</h6>
+                <img src="data:image/png;base64,{{ cluster_viz }}" alt="Visualisasi Cluster">
+            </div>
+        </div>
+    {% else %}
+        <div class="row">
+            <div class="col-12">
+                <p class="warning-message">Visualisasi Cluster tidak tersedia. Ini bisa terjadi jika jumlah fitur kurang dari 2 atau tidak ada cukup pengguna untuk clustering.</p>
+            </div>
+        </div>
+    {% endif %}
+
+    <div class="row mt-3">
+        <div class="col-12">
+            <h6>Jumlah Pengguna per Cluster:</h6>
+            <ul class="list-group mb-4">
+                {% if cluster_info %}
+                    {% for cluster, count in cluster_info.items() %}
+                    <li class="list-group-item d-flex justify-content-between align-items-center">
+                        <span>Cluster {{ cluster }}:</span>
+                        <span class="badge bg-primary rounded-pill">{{ count }} Pengguna</span>
+                    </li>
+                    {% endfor %}
+                {% else %}
+                    <p class="warning-message">Tidak ada informasi cluster yang tersedia. Pastikan data Anda cukup untuk clustering atau lihat log server untuk detail.</p>
+                {% endif %}
+            </ul>
+        </div>
+    </div>
+
+    <h3 class="mt-4">Rekomendasi Produk (Association Rules)</h3>
+    {% if 'Tidak ada aturan rekomendasi' in rules_table %}
+        <p class="warning-message">{{ rules_table|safe }}</p>
+    {% else %}
+        {{ rules_table|safe }}
+    {% endif %}
+
+    <h3 class="mt-4">Data Transaksi (Debugging - 20 Teratas)</h3>
+    <p>Ini adalah contoh data transaksi yang digunakan untuk menghasilkan rekomendasi. Periksa apakah formatnya sudah benar.</p>
+    {{ transactions_for_debug|safe }}
+
+</div>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>
